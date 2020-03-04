@@ -47,3 +47,10 @@ not.null <- function(x) !is.null(x)
 #' @return a logical vector
 #' @export
 not.na <- function(x) !is.na(x)
+
+#' Negates \code{%in%}
+#'
+#' @param x an R object to be tested
+#' @return a logical vector
+#' @export
+`%notin%` <- function(x, y) !(x %in% y)
