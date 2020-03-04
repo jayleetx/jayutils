@@ -3,7 +3,6 @@
 export("%>%")
 export("%notin%")
 export(chunk_wrapper)
-export(correlate_vars)
 export(not.na)
 export(not.null)
 export(read_batch)
