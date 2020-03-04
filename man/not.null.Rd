@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{not.null}
 \alias{not.null}
-\title{Negates \code{is.null}}
+\title{Not Null}
 \usage{
 not.null(x)
 }

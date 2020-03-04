@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{not.na}
 \alias{not.na}
-\title{Negates \code{is.na}}
+\title{Not NA}
 \usage{
 not.na(x)
 }

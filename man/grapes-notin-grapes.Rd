@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{\%notin\%}
 \alias{\%notin\%}
-\title{}
+\title{Not In}
 \usage{
 x \%notin\% y
 }

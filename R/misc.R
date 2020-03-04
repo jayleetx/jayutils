@@ -34,21 +34,27 @@ read_batch <- function(dir = NULL,
   data
 }
 
-#' Negates \code{is.null}
+#' Not Null
+#'
+#' @description Negates \code{is.null}
 #'
 #' @param x an R object to be tested
 #' @return a logical
 #' @export
 not.null <- function(x) !is.null(x)
 
-#' Negates \code{is.na}
+#' Not NA
+#'
+#' @description Negates \code{is.na}
 #'
 #' @param x an R object to be tested
 #' @return a logical vector
 #' @export
 not.na <- function(x) !is.na(x)
 
-#' Negates \code{%in%}
+#' Not In
+#'
+#' @description Negates \code{%in%}
 #'
 #' @param x an R object to be tested
 #' @return a logical vector
