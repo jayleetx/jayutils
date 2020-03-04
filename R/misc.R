@@ -23,13 +23,15 @@ read_batch <- function(dir = NULL,
     if (!dir.exists(dir)) stop(paste0("Directory '", orig_dir, "' not found")) # if it still doesn't exist, break
   }
 
-  files <- list.files(dir, full.names = TRUE)
+
+  files <- list.files(dir, full.names = FALSE)
   names(files) <- files # this makes the name of each list object the file name
+  files <- file.path(dir, files)
 
   data <- lapply(files, data.table::fread, ...) %>% # read the files into a list
     dplyr::bind_rows(.id = "file") # bind them together, attach the name of each object (file) as an id column
 
-  unlink('tmp', recursive = T) # delete unzipped folder
+  if (tools::file_ext(orig_dir) == "zip") unlink('tmp', recursive = T) # delete unzipped folder
 
   data
 }
