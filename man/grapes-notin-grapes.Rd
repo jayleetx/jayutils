@@ -7,11 +7,13 @@
 x \%notin\% y
 }
 \arguments{
-\item{x}{an R object to be tested}
+\item{x}{the object being tested}
+
+\item{y}{the vector `x` might be in}
 }
 \value{
 a logical vector
 }
 \description{
-
+Negates \code{\%in\%}.
 }

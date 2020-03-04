@@ -13,5 +13,5 @@ not.null(x)
 a logical
 }
 \description{
-Negates \code{is.null}
+Negates \code{is.null}.
 }

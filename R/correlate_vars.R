@@ -25,11 +25,11 @@ correlate_vars <- function(x, cors, mean = mean(x), sd = sd(x)) {
     stop("`sd` must have length 1 or the same length as `cors`")
   }
 
-  y <- scale(matrix(rnorm(length(x) * length(cors)),
+  y <- scale(matrix(stats::rnorm(length(x) * length(cors)),
                     ncol = length(cors)))
 
   xy <- cbind(scale(x), y)
-  c1 <- var(xy)
+  c1 <- stats::var(xy)
   chol1 <- solve(chol(c1))
   newxy <-  xy %*% chol1
 

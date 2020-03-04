@@ -13,5 +13,5 @@ not.na(x)
 a logical vector
 }
 \description{
-Negates \code{is.na}
+Negates \code{is.na}.
 }
