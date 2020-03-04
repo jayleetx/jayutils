@@ -2,7 +2,7 @@ Package: jayutils
 Type: Package
 Title: Personal utilities
 Description: Just a bunch of functions that I keep coming back to.
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Jay", "Lee", email = "jay.lee.tx@gmail.com", role = c('aut', 'cre'))
 License: MIT + file LICENSE
 Encoding: UTF-8
