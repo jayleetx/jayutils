@@ -16,6 +16,7 @@
 #' @export
 weighted_tabyl <- function(data, var1, var2, show_na = TRUE, ...) {
   original <- data
+  n <- percent <- valid_percent <- NULL
 
 
   if (missing(var2)) {
@@ -39,7 +40,7 @@ weighted_tabyl <- function(data, var1, var2, show_na = TRUE, ...) {
       srvyr::group_by({{var1}}) %>%
       srvyr::summarize(n = srvyr::survey_total(na.rm = TRUE),
                 percent = srvyr::survey_mean(na.rm = TRUE)) %>%
-      dplyr::select(-ends_with("_se"))
+      dplyr::select(-dplyr::ends_with("_se"))
 
     if (ordered) {
       out <- dplyr::mutate_at(out, dplyr::vars({{ var1 }}),
@@ -54,15 +55,16 @@ weighted_tabyl <- function(data, var1, var2, show_na = TRUE, ...) {
     if (show_na & NA %in% out[[1]]) {
       na_n <- data %>%
         srvyr::summarize(n = srvyr::survey_total({{var1}} %in% c(NA))) %>%
-        dplyr::select(-ends_with("_se"))
+        dplyr::select(-dplyr::ends_with("_se"))
 
       out <- out %>%
         dplyr::filter(!is.na({{var1}})) %>%
         dplyr::bind_rows(na_n) %>%
         dplyr::transmute({{var1}},
                   n,
-                  percent = n / sum(n),
-                  valid_percent = .$percent)
+                  valid_percent = percent,
+                  percent = n / sum(n)) %>%
+        dplyr::select(1:2, percent, valid_percent)
 
 
     } else {
@@ -84,7 +86,7 @@ weighted_tabyl <- function(data, var1, var2, show_na = TRUE, ...) {
     out <- data %>%
       srvyr::group_by({{var1}}, {{var2}}) %>%
       srvyr::summarize(n = srvyr::survey_total(na.rm = TRUE)) %>%
-     dplyr:: select(-ends_with("_se"))#  %>%
+     dplyr::select(-dplyr::ends_with("_se"))#  %>%
     # pivot_wider(names_from = {{var2}}, values_from = n) %>%
     # mutate_at(vars(2:ncol(.)), function(x) replace_na(x, 0))
 
@@ -166,7 +168,7 @@ weighted_tabyl <- function(data, var1, var2, show_na = TRUE, ...) {
 #' @param round_n How many digits to round counts to
 #' @param round_pct How many digits to round percentages to
 #'
-#' @output A `data.frame` object formatted as specified
+#' @return A `data.frame` object formatted as specified
 #' @export
 weighted_crosstab <- function(data, var1, var2,
                               show_na = FALSE,

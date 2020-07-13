@@ -38,6 +38,9 @@ weighted_crosstab(
 
 \item{round_pct}{How many digits to round percentages to}
 }
+\value{
+A `data.frame` object formatted as specified
+}
 \description{
 Uses `tabyl.svy_table` to create and format a two-way crosstab.
 }
