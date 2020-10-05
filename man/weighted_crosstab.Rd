@@ -18,7 +18,7 @@ weighted_crosstab(
 )
 }
 \arguments{
-\item{data}{A weighted data object of class `svy_table`}
+\item{data}{A weighted data object of class `tbl_svy`}
 
 \item{var1}{The variable to be tabulated, or the grouping variable}
 
@@ -42,5 +42,5 @@ weighted_crosstab(
 A `data.frame` object formatted as specified
 }
 \description{
-Uses `tabyl.svy_table` to create and format a two-way crosstab.
+Uses `tabyl.tbl_svy` to create and format a two-way crosstab.
 }

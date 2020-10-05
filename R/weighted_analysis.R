@@ -1,11 +1,11 @@
 #' Survey weighted method for `tabyl`
 #'
 #' `janitor::tabyl()`, while great, doesn't work with weighted data. This is a
-#' start to fixing that; it takes a `svy_table` object and does `tabyl` on it
+#' start to fixing that; it takes a `tbl_svy` object and does `tabyl` on it
 #' (roughly). Currently it only works for 1 or 2 variables, and really does not
 #' look like `tabyl`'s internals so be careful.
 #'
-#' @param data A weighted data object of class `svy_table`
+#' @param data A weighted data object of class `tbl_svy`
 #' @param var1 The variable to be tabulated, or the grouping variable
 #' @param var2 (Optional) the variable to be tabulated within each `var1` group
 #' @param show_na Whether rows/columns that are `NA` should be included
@@ -13,8 +13,10 @@
 #'
 #' @return A `data.frame` containing weighted counts in each one-way or two-way
 #' combination of the input variables.
+#'
+#' @importFrom janitor tabyl
 #' @export
-weighted_tabyl <- function(data, var1, var2, show_na = TRUE, ...) {
+tabyl.tbl_svy <- function(data, var1, var2, show_na = TRUE, ...) {
   original <- data
   n <- percent <- valid_percent <- NULL
 
@@ -155,9 +157,9 @@ weighted_tabyl <- function(data, var1, var2, show_na = TRUE, ...) {
 
 #' A weighted two-way crosstab generator
 #'
-#' Uses `tabyl.svy_table` to create and format a two-way crosstab.
+#' Uses `tabyl.tbl_svy` to create and format a two-way crosstab.
 #'
-#' @param data A weighted data object of class `svy_table`
+#' @param data A weighted data object of class `tbl_svy`
 #' @param var1 The variable to be tabulated, or the grouping variable
 #' @param var2 (Optional) the variable to be tabulated within each `var1` group
 #' @param show_na Whether rows/columns that are `NA` should be included
@@ -179,7 +181,7 @@ weighted_crosstab <- function(data, var1, var2,
                               round_n = 1,
                               round_pct = 1
 ) {
-  out <- weighted_tabyl(data, {{ var1 }}, {{ var2 }}, show_na = show_na) %>%
+  out <- janitor::tabyl(data, {{ var1 }}, {{ var2 }}, show_na = show_na) %>%
     dplyr::select(-dplyr::any_of(drop_set)) %>%
     janitor::adorn_rounding(digits = round_n)
 
