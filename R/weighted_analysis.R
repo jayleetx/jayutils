@@ -98,6 +98,7 @@ tabyl.tbl_svy <- function(data, var1, var2, show_na = TRUE, ...) {
       dplyr::mutate_at(dplyr::vars({{ var2 }}),
                 function(x) factor(x, levels = orig_levels2, ordered = ordered2))  %>%
       tidyr::complete({{var1}}, {{var2}}) %>%
+      dplyr::distinct() %>%
       dplyr::mutate_at(dplyr::vars(c("n")), function(x) tidyr::replace_na(x, 0))
 
     # deal with NA entries
@@ -171,6 +172,8 @@ tabyl.tbl_svy <- function(data, var1, var2, show_na = TRUE, ...) {
 #' @param round_pct How many digits to round percentages to
 #'
 #' @return A `data.frame` object formatted as specified
+#'
+#' @importFrom janitor tabyl
 #' @export
 weighted_crosstab <- function(data, var1, var2,
                               show_na = FALSE,
