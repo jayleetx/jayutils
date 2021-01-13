@@ -39,6 +39,7 @@ tabyl.tbl_svy <- function(data, var1, var2, show_na = TRUE, ...) {
 
     # srvyr to get breakdown
     out <- data %>%
+      dplyr::filter(!is.na({{var1}})) %>%
       srvyr::group_by({{var1}}) %>%
       srvyr::summarize(n = srvyr::survey_total(na.rm = TRUE),
                 percent = srvyr::survey_mean(na.rm = TRUE)) %>%
@@ -54,7 +55,7 @@ tabyl.tbl_svy <- function(data, var1, var2, show_na = TRUE, ...) {
         dplyr::mutate_at(dplyr::vars(c("n", "percent")), function(x) tidyr::replace_na(x, 0))
     }
 
-    if (show_na & NA %in% out[[1]]) {
+    if (show_na) {
       na_n <- data %>%
         srvyr::summarize(n = srvyr::survey_total({{var1}} %in% c(NA))) %>%
         dplyr::select(-dplyr::ends_with("_se"))
@@ -69,9 +70,6 @@ tabyl.tbl_svy <- function(data, var1, var2, show_na = TRUE, ...) {
         dplyr::select(1:2, percent, valid_percent)
 
 
-    } else {
-      out <- out %>%
-        dplyr::filter(!is.na({{var1}}))
     }
     attr(out, "tabyl_type") <- "one_way"
 
